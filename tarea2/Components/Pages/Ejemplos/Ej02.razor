@@ -1,0 +1,34 @@
+@page "/Ej02"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 2</PageTitle>
+
+<h3>Ejercicio 1</h3>
+
+<div class="form-group">
+    <label for="txtNumero">Numero</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+   
+    El ultimo digito es: @resultado
+    
+</div>
+
+@code{
+
+
+    private int numero=0;
+
+    string resultado = "";
+
+    private void Calcular(){
+        resultado = (numero % 100).ToString();
+        
+    }
+}

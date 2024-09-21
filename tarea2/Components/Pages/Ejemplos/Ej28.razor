@@ -1,0 +1,39 @@
+@page "/Ej28"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 28</PageTitle>
+
+<h3>Ejercicio 28</h3>
+
+<p>Construir una función que reciba como parámetro un vector de 10 posiciones enteras y retorne la cantidad de números primos almacenados en el vector.</p>
+
+<div>
+    <label>Ingresa 10 números enteros separados por comas:</label>
+    <input type="text" @bind="inputVector" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Cantidad de números primos: @resultado
+</div>
+
+@code{
+    private string inputVector = "";
+    private string resultado = "";
+
+    private void Calcular(){
+        var numeros = inputVector.Split(',').Select(int.Parse).ToArray();
+        resultado = numeros.Count(IsPrime).ToString(); 
+
+        bool IsPrime(int n) {
+            if (n < 2) return false;
+            for (int i = 2; i <= Math.Sqrt(n); i++) {
+                if (n % i == 0) return false;
+            }
+            return true;
+        }
+    }
+}

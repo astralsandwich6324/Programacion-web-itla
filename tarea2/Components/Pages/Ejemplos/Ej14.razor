@@ -1,0 +1,36 @@
+@page "/Ej14"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 14</PageTitle>
+
+<h3>Ejercicio 14</h3>
+
+<p>Retornar el mayor de dos números enteros</p>
+
+<div class="form-group">
+    <label for="txtNumero1">Número 1</label>
+    <input type="number" class="form-control" id="txtNumero1" @bind="numero1" />
+</div>
+
+<div class="form-group">
+    <label for="txtNumero2">Número 2</label>
+    <input type="number" class="form-control" id="txtNumero2" @bind="numero2" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    El número mayor es: @resultado
+</div>
+
+@code{
+    private int numero1 = 0;
+    private int numero2 = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        resultado = Math.Max(numero1, numero2).ToString();
+    }
+}

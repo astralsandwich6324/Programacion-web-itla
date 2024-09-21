@@ -1,0 +1,49 @@
+@inherits LayoutComponentBase
+@inject NavigationManager NavMan
+
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body pb-3 pt-3" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand text1" href="/">Tarea 2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active text1" aria-current="page" href="/">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text1" href="acerca_de">Acerca de</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+ <header>
+        <h2 class="h2textheader">Estas tareas de web son las mas faciles</h2>
+    </header>
+
+<div class="container-xl mt-3 textheader">
+   
+
+
+
+    <div id="divMain">
+        @Body
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Itla
+        </div>
+    </footer>
+</div>
+
+@code {
+    void goToHome()
+    {
+        NavMan.NavigateTo("/");
+    }
+}

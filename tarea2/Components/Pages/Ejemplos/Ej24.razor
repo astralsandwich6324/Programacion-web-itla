@@ -1,0 +1,40 @@
+@page "/Ej24"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 24</PageTitle>
+
+<h3>Ejercicio 24</h3>
+
+<p>Construir una función que reciba como parámetro dos enteros de dos dígitos cada uno y retorne 1 si son inversos. Ejemplo: 83 es inverso de 38. Deberá retornar 0 si no es así.</p>
+
+<div class="form-group">
+    <label for="txtNumero1">Número 1</label>
+    <input type="number" class="form-control" id="txtNumero1" @bind="numero1" />
+</div>
+
+<div class="form-group">
+    <label for="txtNumero2">Número 2</label>
+    <input type="number" class="form-control" id="txtNumero2" @bind="numero2" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Resultado: @resultado
+</div>
+
+@code{
+    private int numero1 = 0;
+    private int numero2 = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        if (numero1 / 10 == numero2 % 10 && numero1 % 10 == numero2 / 10){
+            resultado = "1";  
+        } else {
+            resultado = "0";  
+        }
+    }
+}

@@ -1,0 +1,59 @@
+@page "/Calculadora"
+
+<PageTitle>Calculadora</PageTitle>
+
+<h3>Calculadora</h3>
+
+<div>
+    <label>Número 1:</label>
+    <input type="number" @bind="numero1">
+</div>
+
+<div>
+    <label>Número 2:</label>
+    <input type="number" @bind="numero2">
+</div>
+
+<div>
+    <button @onclick="Sumar">Sumar</button>
+    <button @onclick="Restar">Restar</button>
+    <button @onclick="Multiplicar">Multiplicar</button>
+    <button @onclick="Dividir">Dividir</button>
+</div>
+
+<div>
+    <h4>Resultado: @resultado</h4>
+</div>
+
+@code {
+    double numero1 = 0;
+    double numero2 = 0;
+    double resultado = 0;
+
+    void Sumar()
+    {
+        resultado = numero1 + numero2;
+    }
+
+    void Restar()
+    {
+        resultado = numero1 - numero2;
+    }
+
+    void Multiplicar()
+    {
+        resultado = numero1 * numero2;
+    }
+
+    void Dividir()
+    {
+        if (numero2 != 0)
+        {
+            resultado = numero1 / numero2;
+        }
+        else
+        {
+            resultado = double.NaN; 
+        }
+    }
+}

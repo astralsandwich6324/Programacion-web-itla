@@ -1,0 +1,54 @@
+@page "/aprendemas"
+
+<PageTitle>Aprende Mas</PageTitle>
+
+
+
+<h1>Aprende mas</h1>
+<br/>
+<Alert Color="AlertColor.Success">
+    <h4 class="alert-heading">Hola como estás</h4>
+    <p>En esta seccion entraras video sobre blazor webassembly</p>
+</Alert>
+<br/>
+
+<div class="row">
+    @foreach (var video in videos){
+        <div class="col-md-4 mb-3">
+            <Card Style="width:18rem;">
+                <img @oneclic="()=>verVideo(Video)" class="card-img-top" src="https://i3.ytimg.com/vi/@video.Url/maxresdefault.jpg" alt="#">
+                <CardBody>
+                    <CardTitle>Video</CardTitle>
+                    <CardText>@video.Titulo</CardText>
+                      <a target="_blank" class="fcc-btn" href="https://www.youtube.com/watch?v=@video.Url">Ver video</a>
+
+                </CardBody>
+            </Card>
+
+        </div>
+    }
+
+</div>
+
+@code{
+
+    class video{
+        public string Titulo{get; set;}
+        public string Url{get; set;}
+   
+    }
+
+    List<video>videos = new List<video>{
+        new video{Titulo="¿Qué diablos es Blazor? | ejemplo básico, este video resume lo que es blazor de una forma un poco sencilla, me gusta que el youtuber es claro al hablar", Url="ktDj2xD-H9s"},
+        new video{Titulo="Aplicaciones en Tiempo Real utilizando Blazor y SignalR, este video me gusta porque el youtuber ya lo conozco y es muy habilidoso", Url="svsDAIbi8bQ"},
+        new video{Titulo="¿QUÉ ES BLAZOR? ¿EL NUEVO JAVASCRIPT DE MICROSOFT?, en este video se explica denuevo lo que es blazro pero esta vez es bastante corto, eso es lo que mas me gusta", Url="piNHZAMxVuk"},
+        new video{Titulo="Blazor - ¿Qué es NUEVO en .NET 8? - NOVEDADES, El video explica las nuevas características de Blazor 8, lanzado en noviembre de 2023. me gusta que es muy completo o al menos da esa sensacion", Url="hAFFyEUpQnA"},
+        new video{Titulo=".Net 8 y Blazor - ToDo App, Este vide te enseña a hacer una aplicacion de todo list, me gusta porque me enseñó cosas nuevas", Url="x93mZi6JFAo"}
+
+
+        };
+
+
+
+
+}

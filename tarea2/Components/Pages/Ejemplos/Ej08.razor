@@ -1,0 +1,42 @@
+@page "/Ej08"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 8</PageTitle>
+
+<h3>Ejercicio 8</h3>
+
+<p>Retorne 1 si dicho elemento está entre los 30 primeros elementos de la serie de Fibonacci, si no retorna 0</p>
+
+<div class="form-group">
+    <label for="txtNumero">Número</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Resultado: @resultado
+</div>
+
+@code{
+    
+    private int[] fibonacci = { 
+        0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 
+        610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 
+        46368, 75025, 121393, 196418, 317811, 514229 
+    };
+
+    private int numero = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        
+        if (fibonacci.Contains(numero)){
+            resultado = "1";  
+        } else {
+            resultado = "0";  
+        }
+    }
+}

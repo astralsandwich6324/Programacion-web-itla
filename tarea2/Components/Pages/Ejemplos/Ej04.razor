@@ -1,0 +1,47 @@
+@page "/Ej04"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 4</PageTitle>
+
+<h3>Ejercicio 4</h3>
+
+<p>Cantidad de digitos pares</p>
+
+<div class="form-group">
+    <label for="txtNumero">Numero</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Contar</button>
+</div>
+
+<div class="form-group">
+   
+    La cantidad de numeros pares son: @resultado
+    
+</div>
+
+@code{
+    string numero= "";
+
+    string resultado = "";
+
+    private void Calcular(){
+        int contadorPares =0;
+
+        foreach(char digito in numero){
+            int valorNumerico = (int)char.GetNumericValue(digito);
+
+            if (valorNumerico % 2 == 0)
+            {
+                contadorPares++;
+            }
+
+            
+        }
+
+        resultado = contadorPares.ToString();
+        
+    }
+}

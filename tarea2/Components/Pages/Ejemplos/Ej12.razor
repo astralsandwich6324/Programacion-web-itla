@@ -1,0 +1,41 @@
+@page "/Ej12"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 12</PageTitle>
+
+<h3>Ejercicio 12</h3>
+
+<p>Recibir como parametro un entero y un digito, y retorne 1 si dicho digito esta en dicho entero y 0 si no es asi</p>
+
+<div class="form-group">
+    <label for="txtNumero">Número</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <label for="txtDigito">Dígito</label>
+    <input type="number" class="form-control" id="txtDigito" @bind="digito" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Resultado: @resultado
+</div>
+
+@code{
+    private int numero = 0;
+    private int digito = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        
+        if (numero.ToString().Contains(digito.ToString())){
+            resultado = "1";  
+        } else {
+            resultado = "0";  
+        }
+    }
+}

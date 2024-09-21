@@ -1,0 +1,89 @@
+@page "/Ej42"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 42</PageTitle>
+
+<h3>Ejercicio 42</h3>
+
+<p>Construir una función que reciba como parámetro una matriz de 3x4 entera y retorne la cantidad de veces que se repite el mayor dato de la matriz.</p> 
+<p>Ingrese exactamente 12 numeros que son 3 filas y 4 columnas</p>  
+
+
+<div>
+    <label>Ingresa los datos de la matriz (separados por comas, fila por fila):</label>
+    <input type="text" @bind="inputMatrix" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Repeticiones del mayor dato: @resultado
+</div>
+
+@code {
+    private string inputMatrix = "";
+    private string resultado = "";
+
+    private int[,] LeerMatriz(string input)
+    {
+        var valores = input.Split(',').Select(int.Parse).ToArray();
+        if (valores.Length != 12)
+        {
+            throw new ArgumentException("La matriz debe tener 12 elementos (3x4)");
+        }
+
+        var matrix = new int[3, 4];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                matrix[i, j] = valores[i * 4 + j];
+            }
+        }
+        return matrix;
+    }
+
+    private int ContarRepeticionesMayorValor(int[,] matrix)
+    {
+        int maxValue = matrix[0, 0];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (matrix[i, j] > maxValue)
+                {
+                    maxValue = matrix[i, j];
+                }
+            }
+        }
+
+        int count = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (matrix[i, j] == maxValue)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private void Calcular()
+    {
+        try
+        {
+            var matrix = LeerMatriz(inputMatrix);
+            int repeticiones = ContarRepeticionesMayorValor(matrix);
+            resultado = repeticiones.ToString();
+        }
+        catch (Exception ex)
+        {
+            resultado = "Error: " + ex.Message;
+        }
+    }
+}

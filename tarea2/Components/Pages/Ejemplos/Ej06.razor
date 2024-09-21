@@ -1,0 +1,42 @@
+@page "/Ej06"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 4</PageTitle>
+
+<h3>Ejercicio 6</h3>
+
+<p>Retorne el caracter al cual pertenece ese entero como codigo ascci</p>
+
+<div class="alert alert-warning" role="alert">
+  Asegurese de colocar cantidades imprimibles, ya que algunos caracteres del codigo ascci no son imprimibles en html
+  ejemplo 125
+</div>
+
+<div class="form-group">
+    <label for="txtNumero">Numero</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Convertir</button>
+</div>
+
+<div class="form-group">
+    El carácter correspondiente es: @resultado
+</div>
+
+@code{
+    
+    private int numero = 0;
+
+   
+
+    
+    private char resultado;
+
+    private void Calcular(){
+    
+        resultado = Convert.ToChar(numero);
+        
+    }
+}

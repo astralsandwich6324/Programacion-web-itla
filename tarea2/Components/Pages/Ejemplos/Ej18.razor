@@ -1,0 +1,37 @@
+@page "/Ej18"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 18</PageTitle>
+
+<h3>Ejercicio 18</h3>
+
+<p>Verificar si el número es el factorial de un dígito</p>
+
+<div class="form-group">
+    <label for="txtNumero">Número</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Resultado: @resultado
+</div>
+
+@code{
+    private int numero = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        int[] factoriales = { 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880 };
+
+        
+        if (factoriales.Contains(numero)){
+            resultado = "1";  
+        } else {
+            resultado = "0";  
+        }
+    }
+}

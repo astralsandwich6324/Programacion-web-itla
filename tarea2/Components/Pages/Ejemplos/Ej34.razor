@@ -1,0 +1,42 @@
+@page "/Ej34"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 34</PageTitle>
+
+<h3>Ejercicio 34</h3>
+
+<p>Construir una función que reciba como parámetro un vector de 10 posiciones enteras y retorne la posición del número entero que tenga mayor cantidad de dígitos</p>
+
+<div>
+    <label>Ingresa 10 números enteros separados por comas:</label>
+    <input type="text" @bind="inputVector" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Posición del número con más dígitos: @resultado
+</div>
+
+@code{
+    private string inputVector = "";
+    private string resultado = "";
+
+    private void Calcular(){
+        var numeros = inputVector.Split(',').Select(int.Parse).ToArray();
+        int maxDigitsIndex = -1;
+        int maxDigitsCount = -1;
+
+        for (int i = 0; i < numeros.Length; i++){
+            int digitCount = Math.Abs(numeros[i]).ToString().Length;
+            if (digitCount > maxDigitsCount){
+                maxDigitsCount = digitCount;
+                maxDigitsIndex = i;
+            }
+        }
+
+        resultado = maxDigitsIndex.ToString();  
+    }
+}

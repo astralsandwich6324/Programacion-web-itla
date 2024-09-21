@@ -1,0 +1,38 @@
+@page "/Ej20"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 20</PageTitle>
+
+<h3>Ejercicio 20</h3>
+
+<p>Verificar si todos los dígitos de un número son iguales</p>
+
+<div class="form-group">
+    <label for="txtNumero">Número</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Resultado: @resultado
+</div>
+
+@code{
+    private int numero = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        
+        string numeroComoTexto = numero.ToString();
+
+        
+        if (numeroComoTexto.Distinct().Count() == 1){
+            resultado = "1";  
+        } else {
+            resultado = "0";  
+        }
+    }
+}

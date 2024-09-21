@@ -1,0 +1,30 @@
+@page "/Ej22"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 22</PageTitle>
+
+<h3>Ejercicio 22</h3>
+
+<p>Verificar si un número es múltiplo de 5</p>
+
+<div class="form-group">
+    <label for="txtNumero">Número</label>
+    <input type="number" class="form-control" id="txtNumero" @bind="numero" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Resultado: @resultado
+</div>
+
+@code{
+    private int numero = 0;
+    private string resultado = "";
+
+    private void Calcular(){
+        resultado = (numero % 5 == 0) ? "1" : "0";  
+    }
+}

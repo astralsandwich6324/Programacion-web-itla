@@ -1,0 +1,40 @@
+@page "/Ej44"
+@rendermode InteractiveServer
+
+<PageTitle>Ejercicio 44</PageTitle>
+
+<h3>Ejercicio 44</h3>
+
+<p>Contar la cantidad de veces que se repite el mayor número primo en una matriz 3x4</p>
+
+<div>
+    <label>Ingresa los datos de la matriz (separados por comas, fila por fila):</label>
+    <input type="text" @bind="inputMatrix" />
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="Calcular">Calcular</button>
+</div>
+
+<div class="form-group">
+    Repeticiones del mayor número primo: @resultado
+</div>
+
+@code{
+    private string inputMatrix = "";
+    private string resultado = "";
+
+    private void Calcular(){
+        var valores = inputMatrix.Split(',').Select(int.Parse).ToArray();
+        var matrix = new int[3, 4];
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 4; j++){
+                matrix[i, j] = valores[i * 4 + j];
+            }
+        }
+
+        int maxPrime = -1;
+        int count = 0;
+
+}
+ }
