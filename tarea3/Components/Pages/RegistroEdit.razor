@@ -1,0 +1,128 @@
+@page "/registro/nuevo"
+@page "/registro/editar/{id}"
+@inject NavigationManager NavMan
+@inject IJSRuntime JSx
+@rendermode InteractiveServer
+@using System.Text.Json
+
+<h3>Datos del Registro</h3>
+
+<EditForm Model="@registro" OnValidSubmit="@GuardarRegistro">
+    <DataAnnotationsValidator/>
+    
+
+    <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <InputDate id="fecha" class="form-control" @bind-Value="@registro.Fecha"/>
+        <ValidationMessage For="@(() => registro.Fecha)"/>
+    </div>
+
+
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <InputTextArea id="descripcion" class="form-control" @bind-Value="@registro.Descripcion"/>
+        <ValidationMessage For="@(() => registro.Descripcion)"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="CostoEstimado" class="form-label">Costo Estimado</label>
+        <InputNumber id="CostoEstimado" class="form-control" @bind-Value="@registro.CostoEstimado"/>
+        <ValidationMessage For="@(() => registro.CostoEstimado)"/>
+    </div>
+
+    <!--Muertos y Heridos-->
+<div class="row">
+    <div class="col">
+        <div class="mb-3">
+            <label for="Muertos" class="form-label">Muertos</label>
+            <InputNumber id="Muertos" class="form-control" @bind-Value="@registro.Muertos"/>
+            <ValidationMessage For="@(() => registro.Muertos)"/>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="mb-3">
+            <label for="Heridos" class="form-label">Heridos</label>
+            <InputNumber id="Heridos" class="form-control" @bind-Value="@registro.Heridos"/>
+            <ValidationMessage For="@(() => registro.Heridos)"/>
+        </div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label for="VehiculosInvolucrados" class="form-label">Vehiculos Involucados</label>
+            <InputNumber id="VehiculosInvolucrados" class="form-control" @bind-Value="@registro.VehiculosInvolucrados"/>
+            <ValidationMessage For="@(() => registro.VehiculosInvolucrados)"/>
+        </div>
+    </div>
+</div>
+    <div class="text-center">
+        <ValidationSummary/>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+
+
+
+
+
+
+</EditForm>
+
+@code{
+
+    [Parameter]
+
+    public string? id {get; set; } = null;
+    private Reporte registro = new Reporte();
+
+    List<Reporte> registros = new List<Reporte>();
+
+
+    private void GuardarRegistro()
+    {
+        if(string.IsNullOrEmpty(registro.Id))
+        {
+            registro.Id = Guid.NewGuid().ToString();
+            registros.Add(registro);
+        }
+        else{
+            var index = registros.FindIndex(x => x.Id == registro.Id);
+            registros[index] = registro;
+        }
+
+        //save local storage
+        JSx.InvokeVoidAsync("localStorage.setItem", "registros", JsonSerializer.Serialize(registros));
+
+        // Guardar el registro
+        NavMan.NavigateTo("registro");
+    }
+
+    //cargar registros previos
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var registroJson = await JSx.InvokeAsync<string>("localStorage.getItem", "registros");
+
+            if(registroJson != null)
+            {
+                registros = JsonSerializer.Deserialize<List<Reporte>>(registroJson);
+
+
+                if(id != null)
+                {
+                    foreach(var item in registros)
+                    {
+                        if(item.Id == id)
+                        {
+                            registro = item;
+                            break;
+                        }
+                    }
+                }
+                StateHasChanged();
+            }
+        }
+    }
+}    
