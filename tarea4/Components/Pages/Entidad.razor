@@ -1,0 +1,112 @@
+@page "/entidad/{tipo}"
+@inject NavigationManager NavMan
+@rendermode InteractiveServer
+@inject SerieContext Sc
+
+<h2>Entidad @Tipo</h2>
+
+
+<div class="text-end">
+    <button type="button" @onclick="agregarNuevo" class="btn btn-primary">
+        Agregar
+    </button>
+</div>
+
+
+
+
+<h3>Agregados</h3>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Pais</th>
+            <th scope="col">Idioma</th>
+            <th scope="col">Protagonistas</th>
+            <th scope="col">Foto</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in lista){
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Pais</td>
+                <td>@item.Idioma</td>
+                <td>@item.Personajes.Count</td>
+                <td><img src="@item.FotoUrl" alt="@item.Nombre" width="100"></td>
+                <td>
+                    <button class="btn btn-warning" @onclick="()=>editar(item.Id)">
+                        Editar
+                    </button>
+                    <button class="btn btn-danger" @onclick="() => eliminar(item.Id)">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code{
+
+    [Parameter]
+    public string Tipo {get;set;} ="";
+
+    TipoEntidad tipoEntidad = TipoEntidad.Libro;
+
+    protected  override async Task OnParametersSetAsync(){
+
+        switch(Tipo){
+            case "libros":
+                tipoEntidad = TipoEntidad.Libro;
+                break;
+            case "peliculas":
+                tipoEntidad = TipoEntidad.Pelicula;
+                break;
+            case "series":
+                tipoEntidad = TipoEntidad.Serie;
+                break;
+        }
+    }
+
+    List<SeriePeliculaLibro> lista  = new List<SeriePeliculaLibro>();
+
+    private void agregarNuevo(){
+        NavMan.NavigateTo($"entidad/{Tipo}/editar");
+    }
+
+    private void editar(int id){
+        NavMan.NavigateTo($"entidad/{Tipo}/editar/{id}");
+    }
+
+    private async Task eliminar(int id)
+    {
+        var item = lista.FirstOrDefault(x => x.Id == id);
+        if (item != null)
+        {
+            // Elimina el elemento de la base de datos
+            Sc.SeriePeliculasLibros.Remove(item);
+            await Sc.SaveChangesAsync();
+
+            // Actualiza la lista local
+            lista.Remove(item);
+            StateHasChanged();
+        }
+    }
+
+    //on after render
+
+    protected override async Task OnAfterRenderAsync(bool firstRender){ 
+        if (firstRender)
+    {
+        lista = Sc.SeriePeliculasLibros.Where(x => x.Tipo == tipoEntidad).ToList();
+        StateHasChanged();
+    }
+    }
+
+    
+
+}

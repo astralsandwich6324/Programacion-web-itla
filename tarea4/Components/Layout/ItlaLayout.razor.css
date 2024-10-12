@@ -1,0 +1,44 @@
+.afacad-flux-fonts{
+    font-family: "Afacad Flux", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "slnt" 0;
+  }
+
+nav{
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 15px 10px 20px 20px;
+  background-color: black;
+}
+
+ul li{
+  display: inline-block;
+  padding: 20px;
+}
+
+a{
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover{
+  color:aqua;
+}
+
+h2{
+  color:#fff ;
+}
+
+h2:hover{
+  color:aqua;
+}
+
+main{
+  margin: 30px 25px;
+}
