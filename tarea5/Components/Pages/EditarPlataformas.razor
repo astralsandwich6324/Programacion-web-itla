@@ -1,0 +1,65 @@
+@page "/plataformasEdit"
+@page "/plataformasEdit/{Id_Plataformas:int}" 
+@rendermode InteractiveServer
+@inject NavigationManager NavMan
+@inject IJSRuntime JSx
+@inject VideoJuegosContext Sc
+@using Microsoft.EntityFrameworkCore;
+
+<PageTitle>Plataformas</PageTitle>
+
+<h3>Plataformas</h3>
+
+<EditForm Model="@instanciadeplataformas" OnValidSubmit="GuardarDatos">                       
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <InputText id="nombre" class="form-control" @bind-Value="instanciadeplataformas.Nombredelaplataforma"/>
+    </div>
+
+    <br>
+    <div class="form-group">
+        <label for="Estado">Estado</label>
+        <InputCheckbox id="Estado" @bind-Value="instanciadeplataformas.Estado" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button> 
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id_Plataformas { get; set; } = 0;
+    ClasePlataformas instanciadeplataformas = new ClasePlataformas();
+
+    private async Task GuardarDatos()
+    {
+        Console.WriteLine("Guardando Datos");
+        if (instanciadeplataformas.Id_Plataformas > 0)
+        {
+            Sc.ColecciondeEntidadesClasePlataforma.Update(instanciadeplataformas);
+        }
+        else
+        {
+            Sc.ColecciondeEntidadesClasePlataforma.Add(instanciadeplataformas);
+        }
+        
+        await Sc.SaveChangesAsync();
+        await JSx.InvokeVoidAsync("alert", "Datos Guardados");
+        NavMan.NavigateTo($"/");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id_Plataformas > 0)
+        {
+            instanciadeplataformas = await Sc.ColecciondeEntidadesClasePlataforma.FirstOrDefaultAsync(x => x.Id_Plataformas == Id_Plataformas) ?? new ClasePlataformas();
+        }
+        else
+        {
+            
+            instanciadeplataformas.Estado = false; 
+        }
+    }
+}

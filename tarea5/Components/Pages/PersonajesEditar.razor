@@ -1,0 +1,98 @@
+@page "/personajes/editar"
+@page "/personajes/editar/{Id_personaje:int}"
+@rendermode InteractiveServer
+@inject NavigationManager NavMan
+@inject IJSRuntime JSx
+@inject VideoJuegosContext Sc
+
+<PageTitle>Personajes Editar</PageTitle>
+
+<h3>Personajes</h3>
+
+<EditForm Model="@instanciaDeClasePersonaje" OnValidSubmit="GuardarDatos">                       
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <InputText id="nombre" class="form-control" @bind-Value="instanciaDeClasePersonaje.Nombre"/>
+    </div>
+    <!------------------------------------------->
+    <br>
+    <div class="form-group">
+        <label for="alias">Alias:</label>
+        <InputText id="alias" class="form-control" @bind-Value="instanciaDeClasePersonaje.Alias"/>
+    </div>
+    <br>
+
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="rol">Rol:</label>
+        <InputText id="rol" class="form-control" @bind-Value="instanciaDeClasePersonaje.Rol"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="habilidad">Habilidad:</label>
+        <InputText id="habilidad" class="form-control" @bind-Value="instanciaDeClasePersonaje.Habilidad"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="armafavorita">Arma Favorita:</label>
+        <InputText id="armafavorita" class="form-control" @bind-Value="instanciaDeClasePersonaje.ArmaFavorita"/>
+    </div>
+    <br>
+    <!----------------------------------------->
+     <div class="form-group">
+        <label for="nivelpoder">Nivel de poder:</label>
+        <InputNumber id="nivelpoder" class="form-control" @bind-Value="instanciaDeClasePersonaje.NivelDePoder"/>
+    </div>
+    <br>
+    <!----------------------------------------->
+    <div class="form-group">
+        <label for="fotopersonaje">Foto del personaje:</label>
+        <input type="url" id="fotopersonaje" class="form-control" @bind="instanciaDeClasePersonaje.FotoDelPersonaje"/>
+    </div>
+    <br>
+    <!------------------------------------->
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+
+</EditForm>
+<!-----------Fin formulario-------------->
+@code {
+
+    [Parameter]
+    public int Id_personaje { get; set; } = 0;
+    ClasePersonaje instanciaDeClasePersonaje = new ClasePersonaje();
+
+    private async Task GuardarDatos()
+    {
+
+        Console.WriteLine("Guardando Datos");
+        if(instanciaDeClasePersonaje.Id_personaje > 0){
+            Sc.ColecciondeEntidadesClasePersonajes.Update(instanciaDeClasePersonaje);
+        }
+        else{
+            Sc.ColecciondeEntidadesClasePersonajes.Add(instanciaDeClasePersonaje);
+        }
+        
+        await Sc.SaveChangesAsync();
+        await JSx.InvokeVoidAsync("alert", "Datos Guardados");
+        NavMan.NavigateTo($"personajes");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (Id_personaje > 0)
+            {
+                instanciaDeClasePersonaje = Sc.ColecciondeEntidadesClasePersonajes.FirstOrDefault(x => x.Id_personaje == Id_personaje) ?? new ClasePersonaje();
+                StateHasChanged();
+            }
+        }
+    }
+}

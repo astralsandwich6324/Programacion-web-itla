@@ -1,0 +1,103 @@
+@page "/"
+@rendermode InteractiveServer
+@inject VideoJuegosContext Sc
+@inject NavigationManager NavMan
+@using Microsoft.EntityFrameworkCore;
+
+<div class="background-container">
+
+
+<header class="header">
+    <h3>Plataformas</h3>
+    <h5>Tarea 5</h5>
+    <h3>Gameboy Advance</h3>
+</header>
+
+
+<div class="btn-menu">
+
+    <button type="button" class="btn btn-secondary buttom">
+        <label for="btn-menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-list icon-menu" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+            </svg>
+        </label>
+    </button>
+</div>
+
+<div class="text-end btn-agregar">
+    <button type="button" @onclick="agregarNuevo" class="btn btn-primary">
+        Agregar Plataforma
+    </button>
+</div>
+
+<div class="container-table-menu">
+    <input type="checkbox" id="btn-menu" />
+    <div class="container-menu">
+        <div class="cont-menu">
+            <nav>
+                <a href="/">Plataforma</a>
+                <a href="videojuegos">Video Juegos</a>
+                <a href="acerca_de">Sobre Mi</a>
+                <a href="personajes">Personajes</a>
+            </nav>
+        </div>
+        <button type="button" class="btn btn-dark buttom">
+                <label for="btn-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                    </svg>
+                </label>
+        </button>
+    </div>
+
+    <div class="container-table">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre de la plataforma</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@instanciadeplataformas?.Nombredelaplataforma</td>
+                    <td>@(instanciadeplataformas?.Estado == true ? "Activo" : "Inactivo")</td>
+                    <td>
+                        <button class="btn btn-warning" @onclick="()=>editar(instanciadeplataformas.Id_Plataformas)">
+                            Editar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+
+
+@code {
+    ClasePlataformas instanciadeplataformas = new ClasePlataformas();
+
+    private void agregarNuevo()
+    {
+        NavMan.NavigateTo("plataformasEdit");
+    }
+
+    private void editar(int id)
+    {
+        NavMan.NavigateTo($"plataformasEdit/{id}");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        instanciadeplataformas = await Sc.ColecciondeEntidadesClasePlataforma.FirstOrDefaultAsync();
+    }
+}

@@ -1,0 +1,98 @@
+@page "/videojuegos/editar"
+@page "/videojuegos/editar/{id:int}"
+@rendermode InteractiveServer
+@inject NavigationManager NavMan
+@inject IJSRuntime JSx
+@inject VideoJuegosContext Sc
+
+<PageTitle>Video Juegos Editar</PageTitle>
+
+<h3>VideoJuegos</h3>
+
+<EditForm Model="@instanciaDeClaseVideoJuegos" OnValidSubmit="GuardarDatos">                       
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <InputText id="nombre" class="form-control" @bind-Value="instanciaDeClaseVideoJuegos.Nombre"/>
+    </div>
+    <!------------------------------------------->
+    <br>
+    <div class="form-group">
+        <label for="desarrollador">Desarrollador:</label>
+        <InputText id="desarrollador" class="form-control" @bind-Value="instanciaDeClaseVideoJuegos.Desarrollador"/>
+    </div>
+    <br>
+
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="plataforma">Plataforma:</label>
+        <InputText id="plataforma" class="form-control" @bind-Value="instanciaDeClaseVideoJuegos.Plataforma"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="genero">Genero:</label>
+        <InputText id="genero" class="form-control" @bind-Value="instanciaDeClaseVideoJuegos.Genero"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="fechalanzamiento">Fecha de Lanzamiento:</label>
+        <InputDate id="fechalanzamiento" class="form-control" @bind-Value="instanciaDeClaseVideoJuegos.FechaDeLanzamiento"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="imagenportadaUrl">Imagen de portada:</label>
+        <input type="url" id="imagenportadaUrl" class="form-control" @bind="instanciaDeClaseVideoJuegos.ImagenDePortada"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="form-group">
+        <label for="descripcion">Descricion:</label>
+        <InputText id="descripcion" class="form-control" @bind-Value="instanciaDeClaseVideoJuegos.Descripcion"/>
+    </div>
+    <br>
+    <!------------------------------------------->
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+
+</EditForm>
+<!-----------Fin formulario-------------->
+@code {
+
+    [Parameter]
+    public int Id { get; set; } = 0;
+    ClaseVideoJuegos instanciaDeClaseVideoJuegos = new ClaseVideoJuegos();
+
+    private async Task GuardarDatos()
+    {
+
+        Console.WriteLine("Guardando Datos");
+        if(instanciaDeClaseVideoJuegos.Id > 0){
+            Sc.ColecciondeEntidadesClaseVideoJuegos.Update(instanciaDeClaseVideoJuegos);
+        }
+        else{
+            Sc.ColecciondeEntidadesClaseVideoJuegos.Add(instanciaDeClaseVideoJuegos);
+        }
+        
+        await Sc.SaveChangesAsync();
+        await JSx.InvokeVoidAsync("alert", "Datos Guardados");
+        NavMan.NavigateTo($"videojuegos");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (Id > 0)
+            {
+                instanciaDeClaseVideoJuegos = Sc.ColecciondeEntidadesClaseVideoJuegos.FirstOrDefault(x => x.Id == Id) ?? new ClaseVideoJuegos();
+                StateHasChanged();
+            }
+        }
+    }
+}
