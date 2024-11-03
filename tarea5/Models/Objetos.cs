@@ -11,7 +11,7 @@ public class ClaseVideoJuegos{
     public string? ImagenDePortada {get; set;}
     public string Descripcion {get; set;} ="";
 
-public List<ClasePersonaje> nommbreDeLista_Personajes {get; set;} = new List<ClasePersonaje>();
+    public List<ClasePersonaje> nommbreDeLista_Personajes {get; set;} = new List<ClasePersonaje>();
 
 }
 

@@ -1,0 +1,77 @@
+﻿@page "/registrarVisita"
+@rendermode InteractiveServer
+@using EmpresaProyecto.Web.Components.Models
+@inject DataContext Dc
+@inject IJSRuntime JSx
+
+<h3>Registrar nueva visita</h3>
+<br />
+<EditForm Model="@InstanciaClaseVisitas" OnValidSubmit="Guardar">
+    <!--------------->
+    <div class="form-group mt-3">
+        <label for="tl">Telefono:</label>
+        <InputText id="tl" class="form-control" @bind-Value="InstanciaClaseVisitas.Telefono" />
+    </div>
+    <!--------------->
+    <div class="form-group mt-3">
+        <label for="name">Nombre:</label>
+        <InputText id="name" class="form-control" @bind-Value="InstanciaClaseVisitas.Nombre"/>
+    </div>
+    <!--------------->
+
+
+    <div class="form-group mt-3">
+        <label for="lastname">Apellido:</label>
+        <InputText id="lastname" class="form-control" @bind-Value="InstanciaClaseVisitas.Apellido"/>
+    </div>
+
+    <!--------------->
+    <div class="form-group mt-3">
+        <label for="mail">Correo:</label>
+        <InputText id="mail" class="form-control" @bind-Value="InstanciaClaseVisitas.Correo" />
+    </div>
+    <!--------------->
+
+   <div class="form-group mt-3">
+       <button class="btn btn-warning" type="submit">Guardar</button>
+   </div>
+    <!--------------->
+
+</EditForm>
+
+@code {
+
+
+    [Parameter]
+    public int Id { get; set; } =0;
+
+    ClaseVisitas InstanciaClaseVisitas = new ClaseVisitas();
+
+
+    private async Task Guardar(){
+        Console.WriteLine("Guardando Datos");
+        if(InstanciaClaseVisitas.Id > 0)
+        {
+            Dc.CollecionClaseVisitas.Update(InstanciaClaseVisitas);
+        }
+        else
+        {
+            Dc.CollecionClaseVisitas.Add(InstanciaClaseVisitas);
+        }
+        await Dc.SaveChangesAsync();
+        await JSx.InvokeVoidAsync("alert", "Datos Guardados");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if(Id > 0)
+            {
+                InstanciaClaseVisitas = Dc.CollecionClaseVisitas.FirstOrDefault(x => x.Id == Id) ?? new ClaseVisitas();
+                StateHasChanged();
+            }
+        }
+    }
+
+}

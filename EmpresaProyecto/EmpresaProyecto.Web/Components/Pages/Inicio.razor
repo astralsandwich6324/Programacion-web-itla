@@ -1,0 +1,54 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager NavMan
+@using EmpresaProyecto.Web.Components.Models
+@using Microsoft.EntityFrameworkCore
+@inject DataContext Dc
+
+<PageTitle>Inicio</PageTitle>
+<h2>Formulario de Registro</h2>
+
+<div>
+    <button class="btn btn-primary" @onclick="Agregar_Nuevo">Agregar Nuevo</button>
+</div>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Telefono</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Correo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in ListaClaseVisitas)
+        {
+            <tr>
+                <td>@item.Telefono</td>
+                <td>@item.Nombre</td>
+                <td>@item.Apellido</td>
+                <td>@item.Correo</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+    @code{
+    List<ClaseVisitas> ListaClaseVisitas = new List<ClaseVisitas>();
+
+    private void Agregar_Nuevo()
+    {
+        NavMan.NavigateTo("registrarVisita");
+    }
+
+    <!--Metodo para traer los datos de la clase vista desde la based de datos--->
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        ListaClaseVisitas = await Dc.CollecionClaseVisitas.ToListAsync();
+        StateHasChanged();
+    }
+}
+
+
