@@ -1,0 +1,17 @@
+﻿@using tarea_7.Components.Models
+@inject IJSRuntime JS
+
+<div id="map" style="height: 500px;"></div>
+
+@code {
+    [Parameter]
+    public List<ClaseDetencion> Detentions { get; set; } = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initializeLeafletMap", Detentions);
+        }
+    }
+}

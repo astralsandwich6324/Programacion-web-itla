@@ -3,6 +3,7 @@
 @using EmpresaProyecto.Web.Components.Models
 @inject DataContext Dc
 @inject IJSRuntime JSx
+@inject NavigationManager NavMan
 
 <h3>Registrar nueva visita</h3>
 <br />
@@ -60,6 +61,7 @@
         }
         await Dc.SaveChangesAsync();
         await JSx.InvokeVoidAsync("alert", "Datos Guardados");
+        NavMan.NavigateTo("/");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

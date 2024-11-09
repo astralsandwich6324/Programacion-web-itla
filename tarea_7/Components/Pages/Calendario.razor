@@ -1,0 +1,20 @@
+﻿@page "/calendar"
+@using Microsoft.EntityFrameworkCore
+@using tarea_7.Components.Models
+@rendermode InteractiveServer
+@using tarea_7.Components.Data
+@inject DetentionContext Dc
+
+
+<h3>Calendario de Detenciones</h3>
+
+<Calendar Detentions ="ListaDentenciones"/>
+
+@code{
+    public List<ClaseDetencion> ListaDentenciones = new List<ClaseDetencion>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaDentenciones = await Dc.clasedetencion.ToListAsync();
+    }
+}

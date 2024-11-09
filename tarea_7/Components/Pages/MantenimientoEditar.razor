@@ -1,0 +1,92 @@
+﻿@page "/mantenimiento/editar/{Id:int}"
+@inject NavigationManager Navigation
+@using tarea_7.Components.Data
+@using tarea_7.Components.Models
+@rendermode InteractiveServer
+@inject DetentionContext Dc
+
+<PageTitle>Editar Detención</PageTitle>
+
+<h1>Editar Detención</h1>
+
+<EditForm Model="@newDetention" OnValidSubmit="AddUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="detentiondate">Fecha de Detención:</label>
+        <InputDate class="form-control" id="detentiondate" @bind-Value="newDetention.DetentionDate" />
+        <ValidationMessage For="@(() => newDetention.DetentionDate)" />
+    </div>
+
+    <div class="form-group">
+        <label for="name">Nombre:</label>
+        <InputText class="form-control" id="name" @bind-Value="newDetention.Name" />
+        <ValidationMessage For="@(() => newDetention.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Apellido:</label>
+        <InputText class="form-control" id="lastname" @bind-Value="newDetention.LastName" />
+        <ValidationMessage For="@(() => newDetention.LastName)" />
+    </div>
+
+    <div class="form-group">
+        <label for="#passport">Pasaporte:</label>
+        <InputText class="form-control" id="#passport" @bind-Value="newDetention.PassportNumber" />
+        <ValidationMessage For="@(() => newDetention.PassportNumber)" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechanacimiento">Fecha de nacimiento:</label>
+        <InputDate class="form-control" id="fechanacimiento" @bind-Value="newDetention.BirthDate" />
+        <ValidationMessage For="@(() => newDetention.BirthDate)" />
+    </div>
+
+    <div class="form-group">
+        <label for="lt">Latitud:</label>
+        <InputNumber class="form-control" id="lt" @bind-Value="newDetention.Latitud" />
+        <ValidationMessage For="@(() => newDetention.Latitud)" />
+    </div>
+
+    <div class="form-group">
+        <label for="lg">Longitud:</label>
+        <InputNumber class="form-control" id="lg" @bind-Value="newDetention.Longitud" />
+        <ValidationMessage For="@(() => newDetention.Longitud)" />
+    </div>
+
+    <button class="btn btn-warning" type="submit">Guardar</button>
+</EditForm>
+
+@code {
+
+    [Parameter] 
+    public int Id { get; set; }
+
+    ClaseDetencion newDetention = new ClaseDetencion();
+
+    protected override void OnInitialized() 
+    { 
+        if (Id != 0) 
+        {
+            newDetention = Dc.clasedetencion.Find(Id) ?? new ClaseDetencion();
+        } 
+    }
+
+    private void AddUser()
+    {
+        if (newDetention.Id > 0)
+        {
+            Dc.clasedetencion.Update(newDetention);
+            Dc.SaveChanges();
+        }
+        else
+        {
+            Dc.clasedetencion.Add(newDetention);
+            Dc.SaveChanges();
+        }
+        StateHasChanged();
+        Navigation.NavigateTo("/mantenimiento");
+    }
+}
+
