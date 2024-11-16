@@ -1,0 +1,85 @@
+@page "/mantenimiento/editar/{Id:int}"
+@using  tarea8.Components.Models;
+@using tarea8.Components.Data;
+@inject DetencionContext Dc
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>MantenimientoEdit</PageTitle>
+<h2>Agregar nuevo registro</h2>
+
+<button class="btn btn-primary mt-2 mb-3" @onclick="volver">Volver</button>
+
+<EditForm Model="@objetodetencion" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group mt-2">
+        <label for="datedd">Fecha Dentencion</label>
+        <InputDate id="datedd" @bind-Value="objetodetencion.FechaDetencion" class="form-control"/>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="name">Nombre</label>
+        <InputText id="name" @bind-Value="objetodetencion.Name" class="form-control"/>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="lastname">Apellido</label>
+        <InputText id="lastname" @bind-Value="objetodetencion.Apellido" class="form-control"/>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="psn">Numero de pasaporte</label>
+        <InputText id="psn" @bind-Value="objetodetencion.PassportNumber" class="form-control"/>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="birthdate">Fecha nacimiento</label>
+        <InputDate id="birthdate" @bind-Value="objetodetencion.FechaNacimiento" class="form-control"/>
+    </div>
+
+
+    <div class="form-group mt-2">
+        <label for="lt">Latitud</label>
+        <InputNumber id="lt" @bind-Value="objetodetencion.Latitud" class="form-control"/>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="lg">Longitud</label>
+        <InputNumber id="lg" @bind-Value="objetodetencion.Longitud" class="form-control"/>
+    </div>
+
+    <div class="form-group mt-2">
+        <button class="form-control btn btn-warning" type="=submit">Guardar</button>
+    </div>
+</EditForm>
+
+
+@code{
+    [Parameter] public int Id {get; set;}
+
+    private void volver(){
+        Navigation.NavigateTo("/");
+    }
+
+    ClaseDentencion objetodetencion = new ClaseDentencion();
+
+    private void Guardar(){
+        if(objetodetencion.Id ==0){
+            Dc.ColeccionClaseDentencion.Add(objetodetencion);
+        }
+        else{
+            Dc.ColeccionClaseDentencion.Update(objetodetencion);
+        }
+
+        Dc.SaveChanges();
+        Navigation.NavigateTo("/");
+    }
+
+    protected override void OnInitialized(){
+        if(Id != 0){
+            objetodetencion = Dc.ColeccionClaseDentencion.Find(Id)?? new ClaseDentencion();
+        }
+    }
+}

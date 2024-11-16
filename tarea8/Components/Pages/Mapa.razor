@@ -1,0 +1,19 @@
+﻿@page "/map"
+@using Microsoft.EntityFrameworkCore
+@using tarea8.Components.Models
+@rendermode InteractiveServer
+@using tarea8.Components.Data
+@inject DetencionContext Dc
+
+<h3>Mapa</h3>
+
+<AsgMap Detentionsdata="ListaDetenciones" />
+
+@code {
+    public List<ClaseDentencion> ListaDetenciones = new List<ClaseDentencion>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaDetenciones = await Dc.ColeccionClaseDentencion.ToListAsync();
+    }
+}

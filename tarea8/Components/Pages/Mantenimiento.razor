@@ -1,0 +1,62 @@
+﻿@page "/"
+@page "/mantenimiento"
+@using tarea8.Components.Data;
+@inject DetencionContext Dc
+@using  tarea8.Components.Models;
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Mantenimiento</PageTitle>
+
+<h1>Detenidos</h1>
+
+<button class="btn btn-primary mt-3" @onclick="AgregarNuevo">Agregar Nuevo</button>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Fecha Detenidos</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Numero de pasaporte</th>
+            <th scope="col">Fecha de nacimiento</th>
+            <th scope="col">Coodenadas</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in listadetencion){
+            <tr>
+                <td>@item.FechaDetencion</td>
+                <td>@item.Name</td>
+                <td>@item.Apellido</td>
+                <td>@item.PassportNumber</td>
+                <td>@item.FechaNacimiento</td>
+                <td>@item.Coordenadas()</td>
+                <td>
+                    <button class="btn btn-warning" @onclick="() => Editar(item.Id)">Editar</button>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code{
+
+    List<ClaseDentencion> listadetencion = new List<ClaseDentencion>();
+
+
+    private void AgregarNuevo(){
+        Navigation.NavigateTo("/mantenimiento/editar/0");
+    }
+
+    private void Editar(int id){
+        Navigation.NavigateTo($"/mantenimiento/editar/{id}");
+    }
+
+    protected override void OnInitialized(){
+        listadetencion = Dc.ColeccionClaseDentencion.ToList();
+    }
+}

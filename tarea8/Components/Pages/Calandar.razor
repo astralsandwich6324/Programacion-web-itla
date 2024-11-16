@@ -1,0 +1,21 @@
+@page "/calendar"
+@using Microsoft.EntityFrameworkCore
+@using tarea8.Components.Models
+@rendermode InteractiveServer
+@using tarea8.Components.Data
+@inject DetencionContext Dc
+
+<PageTitle>Calendar</PageTitle>
+
+<h1>Calendario de Detenidos</h1>
+
+<Calendar Detentions ="ListaDentenciones"/>
+
+@code{
+    public List<ClaseDentencion> ListaDentenciones = new List<ClaseDentencion>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaDentenciones = await Dc.ColeccionClaseDentencion.ToListAsync();
+    }
+}

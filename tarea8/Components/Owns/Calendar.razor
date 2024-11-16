@@ -1,0 +1,131 @@
+﻿@using tarea8.Components.Data
+@using tarea8.Components.Models
+@inherits CalendarDetentionBase
+@rendermode InteractiveServer
+
+
+
+<div class="calendar">
+    <button @onclick="PreviousMonth">Anterior</button>
+    <span>@currentMonthName @currentYear</span>
+    <button @onclick="NextMonth">Siguiente</button>
+</div>
+
+<table class="calendar-table">
+    <thead>
+        <tr>
+            @foreach (var day in daysOfWeek)
+            {
+                <th>@day</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var week in calendarDays)
+        {
+            <tr>
+                @foreach (var day in week)
+                {
+                    <td>
+                        @if (day.HasValue)
+                        {
+                            <div>@day.Value.Day</div>
+                            <div>Total: @(detentionsByDay.ContainsKey(day.Value) ? detentionsByDay[day.Value] : 0)</div>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<ClaseDentencion> Detentions { get; set; } = new();
+
+    private int currentYear;
+    private int currentMonth;
+    private string currentMonthName => new DateTime(currentYear, currentMonth, 1).ToString("MMMM");
+
+    private Dictionary<DateTime, int> detentionsByDay = new();
+    private List<string> daysOfWeek = new() { "Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" };
+    private List<List<DateTime?>> calendarDays = new();
+
+    protected override void OnInitialized()
+    {
+        currentYear = DateTime.Now.Year;
+        currentMonth = DateTime.Now.Month;
+        UpdateCalendar();
+    }
+
+    private void PreviousMonth()
+    {
+        if (currentMonth == 1)
+        {
+            currentMonth = 12;
+            currentYear--;
+        }
+        else
+        {
+            currentMonth--;
+        }
+        UpdateCalendar();
+    }
+
+    private void NextMonth()
+    {
+        if (currentMonth == 12)
+        {
+            currentMonth = 1;
+            currentYear++;
+        }
+        else
+        {
+            currentMonth++;
+        }
+        UpdateCalendar();
+    }
+
+    private void UpdateCalendar()
+    {
+        detentionsByDay = Detentions
+            .Where(d => d.FechaDetencion.HasValue && d.FechaDetencion.Value.Year == currentYear && d.FechaDetencion.Value.Month == currentMonth)
+            .GroupBy(d => d.FechaDetencion.Value.Date)
+            .ToDictionary(g => g.Key, g => g.Count());
+
+        DateTime firstDayOfMonth = new DateTime(currentYear, currentMonth, 1);
+        int daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+
+        calendarDays = new List<List<DateTime?>>();
+        List<DateTime?> week = new List<DateTime?>();
+
+        for (int i = 0; i < (int)firstDayOfMonth.DayOfWeek; i++)
+        {
+            week.Add(null);
+        }
+
+        for (int day = 1; day <= daysInMonth; day++)
+        {
+            DateTime date = new DateTime(currentYear, currentMonth, day);
+            week.Add(date);
+
+            if (week.Count == 7)
+            {
+                calendarDays.Add(week);
+                week = new List<DateTime?>();
+            }
+        }
+
+        if (week.Count > 0)
+        {
+            while (week.Count < 7)
+            {
+                week.Add(null);
+            }
+            calendarDays.Add(week);
+        }
+    }
+
+}
+
+}
