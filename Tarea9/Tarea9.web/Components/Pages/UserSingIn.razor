@@ -1,0 +1,68 @@
+﻿@page "/singIn"
+@using Microsoft.EntityFrameworkCore
+@using Tarea9.Web.Components.Data
+@using Tarea9.web.Components.Models
+@rendermode InteractiveServer
+@inject DataContext Dc
+@inject IJSRuntime Jsx
+@inject NavigationManager Navigation
+
+<PageTitle>Sing in</PageTitle>
+
+<h3>Crear Cuenta</h3>
+
+<EditForm Model="@login" OnValidSubmit="Guardarlogin">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <label for="username">Usuario</label>
+    <InputText id="username" @bind-Value="login.Usuario" />
+
+    <label for="mail">Correo</label>
+    <InputText id="mail" @bind-Value="login.Mail" />
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+    <label for="password">Contraseña</label>
+    <InputText id="password" @bind-Value="login.Contrasena" />
+
+    <button type="submit">
+        Iniciar
+    </button>
+</EditForm>
+
+@code {
+
+    [Parameter] public int Id { get; set; }
+
+    ClaseLogin login = new ClaseLogin();
+
+    private async Task Guardarlogin()
+    {
+
+        var existeUsuario = await Dc.ColeccionInicioSecion
+            .AnyAsync(u => u.Usuario == login.Usuario);
+
+        if (existeUsuario)
+        {
+            await Jsx.InvokeVoidAsync("alert", "El usuario ya existe. Por favor, elige otro nombre.");
+        }
+        else
+        {
+            if (login.Id > 0)
+            {
+                Dc.ColeccionInicioSecion.Update(login);
+            }
+            else
+            {
+                Dc.ColeccionInicioSecion.Add(login);
+            }
+
+            await Dc.SaveChangesAsync();
+            await Jsx.InvokeVoidAsync("alert", "Datos Guardados");
+            Navigation.NavigateTo("/");
+        }
+        
+
+    }
+
+}

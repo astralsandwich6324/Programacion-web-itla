@@ -1,0 +1,85 @@
+﻿@page "/registrovivencias"
+@using Tarea9.web.Components.Models
+@using Tarea9.Web.Components.Data
+@inject NavigationManager Nav
+@inject DataContext Dc
+@rendermode InteractiveServer
+
+<h3>RegistroVivencias</h3>
+<br />
+
+<h6 class="color">@datosGuardados</h6>
+
+<br />
+
+<EditForm Model="@vivencias" OnValidSubmit="Guardar">
+
+    <label for="titulo">Titulo</label>
+    <InputText id="titulo" @bind-Value="vivencias.Titulo"/>
+
+    <label for="descrip">Descripcion</label>
+    <InputText id="descrip" @bind-Value="vivencias.Descripcion" />
+
+    <label for="fchvivencia">Fecha:</label>
+    <InputDate id="fchvivencia" @bind-Value="vivencias.FechaVivencia" />
+
+    <label for="url">Imagen</label>
+    <InputText id="url" @bind-Value="vivencias.Url" />
+
+    <label for="urltext">Escribe un texto de imagen <p>(opcional)</p></label>
+    <InputText id="urltext" @bind-Value="vivencias.TextoImagen" />
+
+    <button type="submit">Guardar</button>
+
+</EditForm>
+
+@code {
+
+    [Parameter] public int Id { get; set; }
+
+    Vivencias vivencias = new Vivencias();
+
+    private string? datosGuardados;
+
+
+
+    private async Task DatosGuardadosExito()
+    {
+        datosGuardados = "¡Datos Guardados Con exito!";
+        StateHasChanged();
+        await Task.Delay(5000);
+        datosGuardados = "";
+        StateHasChanged();
+
+
+    }
+
+    
+
+    private async Task Guardar()
+    {
+        if (vivencias.Id > 0)
+        {
+            Dc.Coleccionvivivencias.Update(vivencias);
+        }
+        else
+        {
+            vivencias.UsuarioId = SessionService.UsuarioActualId;
+            Dc.Coleccionvivivencias.Add(vivencias);
+        }
+
+        await Dc.SaveChangesAsync();
+        DatosGuardadosExito();
+        vivencias = new Vivencias();
+
+    }
+
+    protected override void OnInitialized()
+    {
+        if (Id != 0)
+        {
+            vivencias = Dc.Coleccionvivivencias.Find(Id) ?? new Vivencias();
+        }
+    }
+
+}

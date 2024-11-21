@@ -1,0 +1,43 @@
+﻿.architects-daughter-regular {
+    font-family: "Architects Daughter", cursive;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.architects-daughter-regular-bold {
+    font-family: "Architects Daughter", cursive;
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+
+header nav {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
+}
+
+    header nav ul li {
+        display: inline-block;
+    }
+
+
+
+.body {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.bodydad {
+    max-width: 100%;
+    width: 100%;
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(64,62,191,1) 50%, rgba(109,15,152,1) 100%);
+}

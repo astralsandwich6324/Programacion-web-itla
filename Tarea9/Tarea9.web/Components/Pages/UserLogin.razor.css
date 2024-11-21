@@ -1,0 +1,54 @@
+﻿.editformdad {
+    display: flex;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    height: 100vh;
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(64,62,191,1) 50%, rgba(109,15,152,1) 100%);
+}
+
+h3 {
+    color: #fff;
+    font-size: 40px;
+    align-items: center;
+}
+
+.editformson {
+    align-items: center;
+    width: 50%;
+    padding: 20px;
+    border: 1px solid #70098e;
+    border-radius: 8px;
+    background: white;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
+    background: rgb(2,10,117);
+    background: linear-gradient(90deg, rgba(2,10,117,1) 0%, rgba(119,19,207,1) 58%, rgba(180,60,231,1) 100%);
+}
+
+.editform {
+    background: rgb(2,10,117);
+    background: linear-gradient(90deg, rgba(2,10,117,1) 0%, rgba(119,19,207,1) 58%, rgba(180,60,231,1) 100%);
+}
+
+.label{
+    color:#fff;
+}
+
+.label2 {
+    color: #ff0000;
+}
+
+.input{
+    background-color:#808080;
+    color:#fff;
+}
+
+.letrasbottom{
+    margin-top:10px;
+    color:#fff;
+    float:right;
+}
+
+.linkcrear{
+    color:#fff;
+}

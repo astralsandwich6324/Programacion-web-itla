@@ -1,0 +1,97 @@
+﻿@page "/"
+@page "/login"
+@using Microsoft.EntityFrameworkCore
+@using Tarea9.Web.Components.Data
+@using Tarea9.web.Components.Models
+@rendermode InteractiveServer
+@inject DataContext Dc
+@inject IJSRuntime Jsx
+@inject NavigationManager Navigation
+
+<PageTitle>Login</PageTitle>
+
+
+
+<div class="editformdad">
+    <h3>Iniciar Sesión</h3>
+<div class="editformson">
+        <h4 class="label2">@MensajeIncorrectos</h4>
+        <form @onsubmit="Buscarlogin" class="editform">
+
+            <div class="form-group mt-3">
+                <label class="@datosIncorrectos" for="username">Usuario</label>
+                <input class="form-control form-control-lg input" id="username" @bind="login.Usuario" />
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="@datosIncorrectos" for="password">Contraseña</label>
+                <input class="form-control form-control-lg input" id="password" type="password" @bind="login.Contrasena" />
+            </div>
+
+            <div class="form-group mt-3">
+                <button class="btn btn-success btn-lg" type="submit">Iniciar</button>
+            </div>
+
+        </form>
+        <div class="letrasbottom">
+            <p>Aun no tengo una cuenta
+                <a class="linkcrear"href="singIn">Crear Cuenta</a> 
+                </p>
+        
+        </div>
+</div>
+</div>
+
+
+
+
+@code {
+
+
+    private ClaseLogin login = new ClaseLogin();
+
+
+    private string? datosIncorrectos = "label";
+
+    private string? MensajeIncorrectos;
+
+    private async Task DatosIncorrecotos()
+    {
+        datosIncorrectos = "label2";
+        MensajeIncorrectos = "Datos Incorrectos";
+        StateHasChanged();
+        await Task.Delay(2000);
+        datosIncorrectos = "label";
+        MensajeIncorrectos = "";
+        StateHasChanged();
+
+
+    }
+
+
+    private async Task Buscarlogin()
+    {
+        if (string.IsNullOrWhiteSpace(login.Usuario) || string.IsNullOrWhiteSpace(login.Contrasena))
+        {
+            await Jsx.InvokeVoidAsync("alert", "Por favor, completa todos los campos.");
+            return;
+        }
+
+        var usuario = await Dc.ColeccionInicioSecion
+        .FirstOrDefaultAsync(u => u.Usuario == login.Usuario && u.Contrasena == login.Contrasena);
+
+        if (usuario != null)
+        {
+            SessionService.UsuarioActualId = usuario.Id.ToString() ;
+            await Jsx.InvokeVoidAsync("alert", "Inicio de sesión exitoso");
+            Navigation.NavigateTo("/dashboard");
+        }
+        else
+        {
+            // await Jsx.InvokeVoidAsync("alert", "Usuario o contraseña incorrectos");
+            DatosIncorrecotos();
+
+           
+        }
+    }
+}
