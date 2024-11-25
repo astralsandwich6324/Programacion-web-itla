@@ -3,43 +3,51 @@
 @using Microsoft.EntityFrameworkCore
 @using Tarea9.Web.Components.Data
 @using Tarea9.web.Components.Models
-@rendermode InteractiveServer
 @inject DataContext Dc
 @inject IJSRuntime Jsx
 @inject NavigationManager Navigation
+@inject EstadoCompartido Estado
 
 <PageTitle>Login</PageTitle>
 
 
 
-<div class="editformdad">
-    <h3>Iniciar Sesión</h3>
-<div class="editformson">
-        <h4 class="label2">@MensajeIncorrectos</h4>
-        <form @onsubmit="Buscarlogin" class="editform">
+<div class="background-container">
+    <div class="left">
+        <div class="form-container">
 
-            <div class="form-group mt-3">
-                <label class="@datosIncorrectos" for="username">Usuario</label>
-                <input class="form-control form-control-lg input" id="username" @bind="login.Usuario" />
-            </div>
+            <form @onsubmit="Buscarlogin" class="editform">
 
-            <div class="form-group mt-3">
-                <label class="@datosIncorrectos" for="password">Contraseña</label>
-                <input class="form-control form-control-lg input" id="password" type="password" @bind="login.Contrasena" />
-            </div>
+                <h3>Iniciar Sesión</h3>
+                <h4 class="label2">@MensajeIncorrectos</h4>
 
-            <div class="form-group mt-3">
-                <button class="btn btn-success btn-lg" type="submit">Iniciar</button>
-            </div>
+                <div class="form-group mt-3">
+                    <label class="@datosIncorrectos" for="username">Usuario</label>
+                    <input class="form-control form-control-lg input" id="username" @bind="login.Usuario" />
+                </div>
 
-        </form>
-        <div class="letrasbottom">
-            <p>Aun no tengo una cuenta
-                <a class="linkcrear"href="singIn">Crear Cuenta</a> 
+                <div class="form-group mt-3">
+                    <label class="@datosIncorrectos" for="password">Contraseña</label>
+                    <input class="form-control form-control-lg input" id="password" type="password" @bind="login.Contrasena" />
+                </div>
+
+                <div class="form-group mt-3 button-iniciar-container">
+                    <button class="boton-iniciar" type="submit">Iniciar</button>
+                </div>
+
+            </form>
+            <div class="letrasbottom">
+                <p>
+                    Aun no tengo una cuenta
+                    <a class="linkcrear" href="singIn">Crear Cuenta</a>
                 </p>
-        
+
+            </div>
+
         </div>
-</div>
+    </div>
+    <div class="right"></div>
+    
 </div>
 
 
@@ -49,6 +57,8 @@
 
 
     private ClaseLogin login = new ClaseLogin();
+
+
 
 
     private string? datosIncorrectos = "label";
@@ -85,13 +95,22 @@
             SessionService.UsuarioActualId = usuario.Id.ToString() ;
             await Jsx.InvokeVoidAsync("alert", "Inicio de sesión exitoso");
             Navigation.NavigateTo("/dashboard");
+            CambiarNumero();
+
         }
         else
         {
             // await Jsx.InvokeVoidAsync("alert", "Usuario o contraseña incorrectos");
             DatosIncorrecotos();
 
-           
+
         }
     }
+
+    private void CambiarNumero()
+    {
+        Estado.Link = "dashboard";
+    }
+
+    
 }

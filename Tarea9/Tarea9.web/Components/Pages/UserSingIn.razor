@@ -2,33 +2,51 @@
 @using Microsoft.EntityFrameworkCore
 @using Tarea9.Web.Components.Data
 @using Tarea9.web.Components.Models
-@rendermode InteractiveServer
 @inject DataContext Dc
 @inject IJSRuntime Jsx
 @inject NavigationManager Navigation
 
 <PageTitle>Sing in</PageTitle>
 
-<h3>Crear Cuenta</h3>
 
-<EditForm Model="@login" OnValidSubmit="Guardarlogin">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
+<div class="background-container">
+    <div class="left"></div>
+    <div class="right">
+        <div class="form-container">
+            <form @onsubmit="Guardarlogin" class="editform">
 
-    <label for="username">Usuario</label>
-    <InputText id="username" @bind-Value="login.Usuario" />
+                <h3>Crear Cuenta</h3>
+               
 
-    <label for="mail">Correo</label>
-    <InputText id="mail" @bind-Value="login.Mail" />
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <div class="form-group mt-3">
+                    <label for="username">Usuario</label>
+                    <input class="form-control form-control-lg input" id="username" @bind="login.Usuario" />
+                </div>
 
-    <label for="password">Contraseña</label>
-    <InputText id="password" @bind-Value="login.Contrasena" />
+                <div class="form-group mt-3">
+                    <label for="mail">Correo</label>
+                    <input class="form-control form-control-lg input" id="mail" @bind="login.Mail" />
+                </div>
 
-    <button type="submit">
-        Iniciar
-    </button>
-</EditForm>
+                <div class="form-group mt-3">
+                    <label for="password">Contraseña</label>
+                    <input class="form-control form-control-lg input" id="password" type="password" @bind="login.Contrasena" />
+                </div>
+
+                <div class="form-group mt-3 button-iniciar-container">
+                    <button class="boton-iniciar" type="submit">Crear Cuenta</button>
+                </div>
+
+            </form>
+            
+        </div>
+    </div>
+    
+</div>
+
+
+
+
 
 @code {
 

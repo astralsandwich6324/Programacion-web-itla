@@ -1,41 +1,45 @@
 ﻿@page "/dashboard"
 @using Tarea9.web.Components.Models
 @using static System.Console;
-@rendermode InteractiveServer
 @inject NavigationManager Nav
 
 
-<h3>Dashboard</h3>
+<div class="contenedor-pagina">
+    <div class="contenedor1">
+        <div class="targeta-contenedor1" @onclick="RegistrarVivencia">
+            
+                <div class="card" style="width: 100%;">
+                    <img src="img/mando.png" class="card-img-top" alt="imagen de mando">
+                    <div class="card-body cadarbodywith">
+                        <h5 class="card-title">Registrar vivencias</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Ultima vez: @dateTimeRegistroVivencias.DateTimeMethot()</h6>
+                        <p class="card-text">Aqui puedes registrar tus vivencias.</p>
+                        <a href="registrovivencias" class="card-link">Registrar vivencias</a>
 
-<div class="cardmodifydad">
-    <button class="botondetargeta margenboton1" @onclick="RegistrarVivencia">
-<div class="card cardmodifyson" style="width: 100%;">
-        <img src="img/mando.png" class="card-img-top" alt="imagen de mando">
-    <div class="card-body cadarbodywith">
-        <h5 class="card-title">Registrar vivencias</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Ultima modificacion @dateTimeRegistroVivencias.DateTimeMethot()</h6>
-        <p class="card-text">Aqui puedes registrar tus vivencias.</p>
-        <a href="registrovivencias" class="card-link">Registrar vivencias</a>
-        
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+    <div class="contenedor2">
+        <div class="targeta-contenedor2" @onclick="VisualizarVivencia">
+            
+                <div class="card" style="width: 100%;">
+                    <img src="img/mandoLupa.png" class="card-img-top" alt="imagen de mando con lupa">
+                    <div class="card-body">
+                        <h5 class="card-title">Ver vivencias</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Ultima vez: @dateTimelistadoVivencias.DateTimeMethot()</h6>
+                        <p class="card-text">Aqui puedes visualizar tus vivencias</p>
+                        <a href="listadovivencias" class="card-link">Ver vivencias</a>
+
+                    </div>
+                </div>
+            
+        </div>
     </div>
 </div>
-    </button>
+ 
 
-    <button class="botondetargeta margenboton2" @onclick="VisualizarVivencia">
-<div class="card cardmodifyson" style="width: 100%;">
-        <img src="img/mandoLupa.png" class="card-img-top" alt="imagen de mando con lupa">
-    <div class="card-body">
-        <h5 class="card-title">Ver vivencias</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Ultima modificacion @dateTimelistadoVivencias.DateTimeMethot()</h6>
-        <p class="card-text">Aqui puedes visualizar tus vivencias</p>
-                <a href="listadovivencias" class="card-link">Ver vivencias</a>
-        
-    </div>
-</div>
-    </button>
-
-
-</div>
 @code {
 
     DateTimeRegistroVivencias dateTimeRegistroVivencias = new DateTimeRegistroVivencias();
@@ -44,11 +48,13 @@
 
     private void RegistrarVivencia()
     {
+        dateTimeRegistroVivencias.UpdateDateTime();
         Nav.NavigateTo("registrovivencias");
     }
 
     private void VisualizarVivencia()
     {
+        dateTimelistadoVivencias.UpdateDateTime();
         Nav.NavigateTo("listadovivencias");
     }
 

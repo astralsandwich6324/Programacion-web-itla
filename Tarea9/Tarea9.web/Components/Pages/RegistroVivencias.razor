@@ -3,35 +3,60 @@
 @using Tarea9.Web.Components.Data
 @inject NavigationManager Nav
 @inject DataContext Dc
-@rendermode InteractiveServer
+@inject IJSRuntime Jsx
 
-<h3>RegistroVivencias</h3>
-<br />
+<div class="contenedor-pagina">
+    <div class="contenerdor-background">
+        <div class="contenedor1">
+            <div class="contenedorbotonvolver">
+                <button class="volverboton" @onclick="MostrarDialogo">
+                    Volver
+                </button>
+            </div>
+        </div>
+        <div class="contenedor2">
+            <div class="contenedor-formulario">
+                <dialog id="dialogoMensaje" class="dialogo">
+                    <p>¿Deseas volver a tus vivencias?</p>
+                    <button class="boton-dialogo boton-no" @onclick="CerrarDialogo">No</button>
+                    <button class="boton-dialogo boton-si" @onclick="Volver">Si</button>
+                </dialog>
+                <form @onsubmit="Guardar" class="editform">
+                    <h4>¡Registra tus vivencias!</h4>
+                    <h6 class="color">@datosGuardados</h6>
+                    <label for="titulo">Titulo</label>
+                    <input type="text" id="titulo" @bind="vivencias.Titulo" />
 
-<h6 class="color">@datosGuardados</h6>
+                    <label for="descrip">Descripcion</label>
+                    <input type="text" id="descrip" @bind="vivencias.Descripcion" />
 
-<br />
+                    <label for="fchvivencia">Fecha:</label>
+                    <input type="date" id="fchvivencia" @bind="vivencias.FechaVivencia" />
 
-<EditForm Model="@vivencias" OnValidSubmit="Guardar">
+                    <label for="url">Imagen</label>
+                    <input type="text" id="url" @bind="vivencias.Url" />
 
-    <label for="titulo">Titulo</label>
-    <InputText id="titulo" @bind-Value="vivencias.Titulo"/>
+                    <label for="urltext">Escribe un texto de imagen <p>(opcional)</p></label>
+                    <input type="text" id="urltext" @bind="vivencias.TextoImagen" />
 
-    <label for="descrip">Descripcion</label>
-    <InputText id="descrip" @bind-Value="vivencias.Descripcion" />
+                    <div class="button-iniciar-container">
+                        <button type="submit" class="boton-iniciar">Guardar</button>
+                    </div>
 
-    <label for="fchvivencia">Fecha:</label>
-    <InputDate id="fchvivencia" @bind-Value="vivencias.FechaVivencia" />
 
-    <label for="url">Imagen</label>
-    <InputText id="url" @bind-Value="vivencias.Url" />
+                </form>
+            </div>
 
-    <label for="urltext">Escribe un texto de imagen <p>(opcional)</p></label>
-    <InputText id="urltext" @bind-Value="vivencias.TextoImagen" />
 
-    <button type="submit">Guardar</button>
 
-</EditForm>
+
+        </div>
+    </div>
+    
+    
+</div>
+
+
 
 @code {
 
@@ -54,7 +79,7 @@
 
     }
 
-    
+
 
     private async Task Guardar()
     {
@@ -80,6 +105,24 @@
         {
             vivencias = Dc.Coleccionvivivencias.Find(Id) ?? new Vivencias();
         }
+    }
+
+    private ElementReference dialogo;
+
+    private async Task MostrarDialogo()
+    {
+        await Jsx.InvokeVoidAsync("eval", "document.getElementById('dialogoMensaje').showModal()");
+    }
+
+    private async Task CerrarDialogo()
+    {
+        await Jsx.InvokeVoidAsync("eval", "document.getElementById('dialogoMensaje').close()");
+    }
+
+    private async Task Volver()
+    {
+        Nav.NavigateTo("listadovivencias");
+        CerrarDialogo();
     }
 
 }

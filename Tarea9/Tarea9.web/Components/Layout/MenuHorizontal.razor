@@ -1,17 +1,14 @@
 ﻿@inherits LayoutComponentBase
+@using Tarea9.web.Components.Models
+@inject EstadoCompartido Estado
 
-<header class="architects-daughter-regular-bold">
+<header class="nunito-normal-bold">
     <nav>
-        <h3>*********</h3>
+        <h3><a class="h3" href="@Estado.Link">Diario de Video Juegos</a> </h3>
         <ul>
+            
             <li>
-                <a class="link" href="login">Login</a>
-            </li>
-            <li>
-                <a class="link" href="singIn">Sinin</a>
-            </li>
-            <li>
-                <a class="link" href="dashboard">dasboard</a>
+                <a class="link" href="acercade"><i class="fa-solid fa-address-card"></i> Acerca De</a>
             </li>
         </ul>
     </nav>
@@ -19,10 +16,14 @@
 </header>
 
 
-<section class="bodydad">
-    <main class="body architects-daughter-regular">@Body</main>
-</section>
+
+<main class="body nunito-normal">
+    @Body
+</main>
+
 
 @code {
+    
 
+    
 }

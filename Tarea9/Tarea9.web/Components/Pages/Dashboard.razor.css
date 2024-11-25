@@ -1,34 +1,46 @@
-﻿.cardmodifydad{
-    display:flex;
-    max-width:100%;
-    justify-content:space-between;
+﻿.contenedor-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    /*padding: 20px;*/
+    box-sizing: border-box;
+    min-height: 100vh;
 }
 
-.cardmodifyson {
-    display: inline-block;
-    
+.contenedor1, .contenedor2 {
+    flex: 1 1 50%;
+    /*width: 100%;*/
+    background-color: #221a56;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
     
 }
 
-/*.cadarbodywith{
-    width:100%;
-}*/
 
-.botondetargeta {
-    all: unset;
-    cursor: pointer;
-    border: 1px solid #d7d7d7;
-    border-radius: 2px;
+
+.targeta-contenedor1 {
+    background: #540eb9;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    padding: 20px;
+    border-radius: 8px;
     box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
 }
 
-.margenboton1 {
-    margin-left: 15%;
-    width:30%;
+.targeta-contenedor2 {
+    background: #540eb9;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
-.margenboton2 {
-    margin-right: 15%;
-    width: 30%;
-}
+
 

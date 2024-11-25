@@ -4,13 +4,21 @@
     {
         public int Id { get; set; }
 
-        private DateTime dateTimeRv = DateTime.Now;
+        private DateTime dateTimeRv;
+
+        public DateTimeRegistroVivencias()
+        {
+            dateTimeRv = DateTime.Now;
+        }
+
+        public void UpdateDateTime()
+        {
+            dateTimeRv = DateTime.Now;
+        }
 
         public string DateTimeMethot()
         {
-            string datetimeMethot = dateTimeRv.ToString();
-
-            return datetimeMethot;
+            return dateTimeRv.ToString();
         }
     }
 
@@ -18,13 +26,22 @@
     {
         public int Id { get; set; }
 
-        private DateTime dateTimeLv = DateTime.Now;
+        private DateTime dateTimeLv;
+
+        public DateTimeListadoVivencias()
+        {
+            dateTimeLv = DateTime.Now;
+        }
+
+        public void UpdateDateTime()
+        {
+            dateTimeLv = DateTime.Now;
+        }
 
         public string DateTimeMethot()
         {
-            string datetimeMethot = dateTimeLv.ToString();
-
-            return datetimeMethot;
+            return dateTimeLv.ToString();
         }
+
     }
 }

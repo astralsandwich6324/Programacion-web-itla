@@ -1,3 +1,134 @@
-﻿.color {
-    color:lawngreen;
+﻿.contenedor-pagina {
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    min-height: 100vh;
 }
+
+.contenerdor-background {
+    background-color: #250a5e;
+}
+
+.contenedor1{
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    
+}
+
+.contenedorbotonvolver{
+    width:200px;
+    padding:15px;
+}
+
+    .contenedorbotonvolver .volverboton {
+        width: 50%;
+        padding: 10px;
+        background-color: #e34d0c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .contenedorbotonvolver .volverboton:hover {
+            background-color: #f5733b;
+            color: white;
+        }
+
+.contenedor2 {
+    display: flex;
+    /*width: 100%;*/
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contenedor-formulario {
+    background: #540eb9;
+    width: 500px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.editform {
+    width: 100%;
+}
+
+    .editform h4 {
+        text-align: center;
+        color: #fff;
+        font-size: 40px;
+        align-items: center;
+    }
+
+    .editform input {
+        background-color: #fff;
+        color: #000;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .editform label{
+        color:#fff;
+    }
+
+    .editform .button-iniciar-container .boton-iniciar {
+        width: 100%;
+        padding: 10px;
+        background-color: #31b233;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+        .editform .button-iniciar-container .boton-iniciar:hover {
+            background-color: #3cde3f;
+        }
+
+
+.color{
+    color:#3cde3f;
+}
+
+
+.dialogo {
+    background: #0a0725;
+    border: none;
+    width:35%;
+    height:150px;
+    padding:20px;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+    .dialogo p{
+    color:#fff;
+    }
+
+    .dialogo .boton-dialogo {
+        width: 125px;
+        padding: 10px;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .dialogo .boton-no {
+        background-color: #cc3939;
+    }
+
+        .dialogo .boton-no:hover {
+            background-color: #eb5353;
+        }
+
+    .dialogo .boton-si {
+        background-color: #0e2293;
+
+    }
+
+        .dialogo .boton-si:hover {
+            background-color: #374ab6;
+        }

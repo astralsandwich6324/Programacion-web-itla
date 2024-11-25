@@ -3,36 +3,54 @@
 @using Tarea9.Web.Components.Data
 @inject NavigationManager Nav
 @inject DataContext Dc
-@rendermode InteractiveServer
 @inject IJSRuntime Jsx
 
-<h1>Listado de vivencias</h1>
 
-<div class="text-end">
-    <button class="btn btn-primary" @onclick="AgregarNuevo">¿Agregar Nueva vivencia?</button>
-    <button class="btn btn-danger ms-2" @onclick="MostrarDialogo">Borrar todas las vivencias</button>
+<div class="contenedor-pagina">
+    <div class="contenedor">
+    <div class="contenedor-elementos-arriba">
+       
+            <h1>¡Tus vivencias!</h1>
+
+            <div class="buttons-container">
+                <button class="boton-agregar" @onclick="AgregarNuevo">¿Agregar Nueva vivencia?</button>
+            <button class="boton-eliminar" @onclick="MostrarDialogo"><i class="fa-solid fa-circle-exclamation"></i> Borrar todas las vivencias</button>
+            </div>
+
+
+
+            <dialog class="dialogo" id="dialogoMensaje">
+            <p>Estas seguro de que quieres borrar todas tus vivencias</p>
+                <button class="boton-dialogo boton-no" @onclick="CerrarDialogo">Calcelar</button>
+                <button class="boton-dialogo boton-si" @onclick="BorrarTodasLasVivencias">Cerrar</button>
+        </dialog>
+
+    </div>
+
+        <div class="contenedor-elementos-abajo">
+            
+                @foreach (var item in listavivencias)
+                {
+                    item.DefaultUrl();
+                    item.DefaultText();
+                    <div class="card cardmodifyson" style="width: 300px;">
+                        <img src="@item.Url" class="card-img-top" alt="@item.TextoImagen">
+                        <div class="card-body cadarbodywith">
+                            <h5 class="card-title">@item.Titulo</h5>
+                            <p class="card-text">@item.Descripcion</p>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Fecha de creacion: @item.FechaVivencia</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Ultima modificacion @item.UltimaModificacion</h6>
+                        </div>
+                    </div>
+                }
+            
+            
+        </div>
+
+    </div>
+
 </div>
 
-<dialog id="dialogoMensaje">
-    <p>Estas seguro de que quieres borrar todas tus vivencias</p>
-    <button @onclick="CerrarDialogo">Calcelar</button>
-    <button @onclick="BorrarTodasLasVivencias">Cerrar</button>
-</dialog>
-
-@foreach (var item in listavivencias)
-        {
-    item.DefaultUrl();
-    item.DefaultText();
-    <div class="card cardmodifyson" style="width: 18rem;">
-        <img src="@item.Url" class="card-img-top" alt="@item.TextoImagen">
-        <div class="card-body cadarbodywith">
-            <h5 class="card-title">@item.Titulo</h5>
-            <p class="card-text">@item.Descripcion</p>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Fecha de creacion: @item.FechaVivencia</h6>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Ultima modificacion @item.UltimaModificacion</h6>
-        </div>
-    </div>
-        }
 
 @code {
     List<Vivencias> listavivencias = new List<Vivencias>();
