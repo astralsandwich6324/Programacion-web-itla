@@ -1,0 +1,69 @@
+﻿@page "/"
+@using Microsoft.EntityFrameworkCore
+@using Tarea10.Components.Data
+@inject DataContext DbContext
+@using Tarea10.Components.Models.Entities
+@rendermode InteractiveServer
+
+
+<table>
+    @for (int fila = 0; fila < 5; fila++)
+    {
+        <tr>
+            @for (int columna = 0; columna < 5; columna++)
+            {
+                int index = fila * 5 + columna;
+                <td>
+                    <input type="text" value="@Valores[index]" class="@CellColors[index]"
+                           @oninput="(e) => ValidarValor(e, index)" />
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<button @onclick="GuardarDatos">Guardar</button>
+
+@code {
+    string[] Valores = new string[25];
+    string[] CellColors = new string[25];
+
+    private void ValidarValor(ChangeEventArgs e, int index)
+    {
+        Valores[index] = e.Value?.ToString()?.ToLower()?.Trim() ?? "";
+
+        if (Valores[index] == "rojo") CellColors[index] = "red";
+        else if (Valores[index] == "verde") CellColors[index] = "green";
+        else if (Valores[index] == "azul") CellColors[index] = "blue";
+        else CellColors[index] = "";
+    }
+
+    private async Task GuardarDatos()
+    {
+        var existingData = await DbContext.Cells.ToListAsync();
+        DbContext.Cells.RemoveRange(existingData);
+
+        for (int i = 0; i < 25; i++)
+        {
+            var cell = new CellData
+                {
+                    Id = i + 1,
+                    Value = Valores[i],
+                    Color = CellColors[i]
+                };
+            DbContext.Cells.Add(cell);
+        }
+
+        await DbContext.SaveChangesAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await DbContext.Cells.ToListAsync();
+        foreach (var cell in data)
+        {
+            Valores[cell.Id - 1] = cell.Value;
+            CellColors[cell.Id - 1] = cell.Color;
+        }
+    }
+}
