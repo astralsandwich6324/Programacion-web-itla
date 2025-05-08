@@ -2,28 +2,32 @@
 @using Tarea9.web.Components.Models
 @inject EstadoCompartido Estado
 
-<header class="nunito-normal-bold">
+<header class="open-sans header">
     <nav>
-        <h3><a class="h3" href="@Estado.Link">Diario de Video Juegos</a> </h3>
+        <h3>
+            <a id="linkDinamico" class="h3-link" href="@Estado.Link">
+                <i class="fa-solid fa-gamepad"></i>DVJ
+            </a>
+        </h3>
         <ul>
-            
             <li>
-                <a class="link" href="acercade"><i class="fa-solid fa-address-card"></i> Acerca De</a>
+                <a id="botonDinamico" class="link btn @Estado.ClasebotonDinamico" href="@Estado.BotonDinamico">
+                    @Estado.ValueBotonDinamico
+                </a>
             </li>
         </ul>
     </nav>
-
 </header>
 
 
 
-<main class="body nunito-normal">
+
+<main class="body">
     @Body
 </main>
 
 
 @code {
-    
+  
 
-    
 }

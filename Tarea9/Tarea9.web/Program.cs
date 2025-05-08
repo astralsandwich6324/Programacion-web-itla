@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Tarea9.web.Components;
 using Tarea9.web.Components.Models;
 using Tarea9.Web.Components.Data;
+using Microsoft.JSInterop;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

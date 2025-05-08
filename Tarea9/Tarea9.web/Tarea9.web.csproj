@@ -23,4 +23,8 @@
     <Folder Include="Components\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\EstadoCompartido.js" />
+  </ItemGroup>
+
 </Project>

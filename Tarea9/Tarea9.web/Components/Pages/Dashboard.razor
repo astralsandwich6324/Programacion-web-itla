@@ -2,7 +2,8 @@
 @using Tarea9.web.Components.Models
 @using static System.Console;
 @inject NavigationManager Nav
-
+@inject IJSRuntime JS
+@inject EstadoCompartido Estado
 
 <div class="contenedor-pagina">
     <div class="contenedor1">
@@ -56,6 +57,21 @@
     {
         dateTimelistadoVivencias.UpdateDateTime();
         Nav.NavigateTo("listadovivencias");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Llama al método de JavaScript para inicializar el estado
+            await JS.InvokeVoidAsync("estadoCompartido.cambiarEstado", new
+            {
+                link = "dashboard",
+                botonDinamico = "login",
+                valueBotonDinamico = "Cerrar Sesión",
+                claseBotonDinamico = "btn-danger"
+            });
+        }
     }
 
 
